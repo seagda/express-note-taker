@@ -15,7 +15,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-// TODO: update the db.json file
+// TODO: call filesystem to update the db.json file
+const updateDbfile = (res, sendUpdate) => {
+    fs.readFile(dbPath, "utf8", (err, data) => {
+        if (sendError(err, res)) fs.writeFile(dbPath, JSON.stringify(sendUpdate(JSON.parse(data))), err => sendError(err, res));
+    })
+};
 
 // add error handling
 const sendError = (err, res) => {
