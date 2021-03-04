@@ -1,21 +1,34 @@
-// Step 1: import  packages
+// import packages
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
 
-// Step 2. connect to local db file 
+// connect to local db file 
 const dbPath = path.join(__dirname, "db/db.json");
 
-// Step 3: configure the server
+// setup the express server
 const app = express();
 const PORT = process.env.PORT || 8080;
+
+// configure data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-// Step 4. TODO: setup routes
+// add error handling
+const sendError = (err, res) => {
+    if (err) {
+        console.error(err);
+        if (!res.headersSent) res.status(500).send({message: "Server error."});
+        res.end();
+        return false;
+    }
+    return true;
+};
 
-// Step 5. start server
+// TODO: setup routes
+
+// start server
 app.listen(PORT, err => {
     if (err) {
         console.error(err);
