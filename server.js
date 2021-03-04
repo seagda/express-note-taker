@@ -33,29 +33,43 @@ const sendError = (err, res) => {
     return true;
 };
 
-// TODO: setup API routes for data
+// setup API routes for data
 
-// TODO: get route for READING notes
-app.get(
-
+// get route for VIEWING notes
+app.get("/api/notes", (res) => res.sendFile(dbPath, err => sendError(err, res))
 );
 
-// TODO: post route for CREATING a note
-app.post(
+// post route for ADDING a note
+app.post("/api/notes", (req, res) => {
+    updateDbfile(res, notes => {
+        let newObj = req.body;
+        let noteId = 1;
+        const noteIds = notes.map(note => parseInt(note.id));
 
-);
+            for ( ; noteIds.includes(noteId); noteId++);
+                const addNote = {...newObj, id: noteId};
+        
+                notes.push(addNote);
+        res.json(addNote);
+        return notes;
+    })   
+});
 
-// TODO: delete route for DELETING a note
+// delete route for DELETING a note
 
-app.delete(
-
+app.delete("/api/notes/:id", (req, res) => {
+    updateDbfile(res, notes => notes.filter(note => note.id != req.params.id));
+    res.end();
+    }
 );
 
 // setup HTML routes for responding to http requests
-app.get("/notes", (res) => res.sendFile(path.join(__dirname, "public/notes.html")));
+app.get("/notes", (res) => res.sendFile(path.join(__dirname, "public/notes.html"))
+);
 
 // redirect all random urls to the index 
-app.get("/*", (res) => res.sendFile(path.join(__dirname, "public/index.html")));
+app.get("/*", (res) => res.sendFile(path.join(__dirname, "public/index.html"))
+);
 
 
 // start server
