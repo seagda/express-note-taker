@@ -36,7 +36,7 @@ const sendError = (err, res) => {
 // setup API routes for data
 
 // get route for VIEWING notes
-app.get("/api/notes", (res) => res.sendFile(dbPath, err => sendError(err, res))
+app.get("/api/notes", (req, res) => res.sendFile(dbPath, err => sendError(err, res))
 );
 
 // post route for ADDING a note
@@ -44,11 +44,11 @@ app.post("/api/notes", (req, res) => {
     updateDbfile(res, notes => {
         let newObj = req.body;
         let noteId = 1;
-        const noteIds = notes.map(note => parseInt(note.id));
+        const noteIds = notes.map(note => note.id);
 
             for ( ; noteIds.includes(noteId); noteId++);
                 const addNote = {...newObj, id: noteId};
-        
+         
                 notes.push(addNote);
         res.json(addNote);
         return notes;
@@ -64,11 +64,11 @@ app.delete("/api/notes/:id", (req, res) => {
 );
 
 // setup HTML routes for responding to http requests
-app.get("/notes", (res) => res.sendFile(path.join(__dirname, "public/notes.html"))
+app.get("/notes", (req, res) => res.sendFile(path.join(__dirname, "public/notes.html"))
 );
 
 // redirect all random urls to the index 
-app.get("/*", (res) => res.sendFile(path.join(__dirname, "public/index.html"))
+app.get("/*", (req, res) => res.sendFile(path.join(__dirname, "public/index.html"))
 );
 
 
