@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "back-end code: s.d.mullaney. front-end code supplied.",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4"

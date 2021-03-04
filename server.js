@@ -26,8 +26,8 @@ const updateDbfile = (res, sendUpdate) => {
 const sendError = (err, res) => {
     if (err) {
         console.error(err);
-        if (!res.headersSent) res.status(500).send({message: "Server error."});
-        res.end();
+        if (!res.headersSent) res.status(500).send({message: "Server error."})
+        else res.sendStatus(200);
         return false;
     }
     return true;
@@ -74,8 +74,6 @@ app.get("/*", (res) => res.sendFile(path.join(__dirname, "public/index.html"))
 
 // start server
 app.listen(PORT, err => {
-    if (err) {
-        console.error(err);
-    }
+    if (err) console.error(err);
     console.log(`Notetaker app listening on port ${PORT}`);
 });
