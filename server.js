@@ -15,6 +15,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
+// TODO: update the db.json file
+
 // add error handling
 const sendError = (err, res) => {
     if (err) {
@@ -26,7 +28,14 @@ const sendError = (err, res) => {
     return true;
 };
 
-// TODO: setup routes
+// TODO: setup API routes for data
+// TODO: get route for READING notes
+// TODO: post route for CREATING a note
+// TODO: delete route for DELETING a note
+// 
+// TODO: setup HTML routes for responding to http requests
+
+
 
 // start server
 app.listen(PORT, err => {
